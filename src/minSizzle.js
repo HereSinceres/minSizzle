@@ -1,5 +1,4 @@
 (function (window) {
-
     // http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier
     //identifier 匹配规则
     var identifier = "(?:\\\\.|[\\w-]|[^\0-\\xa0])+";
@@ -22,6 +21,7 @@
     }
 
     function makeArray(iterable) {
+        console.log(iterable);
         var ret = [],
             len = iterable.length;
         //String、window和function也有length属性
@@ -33,23 +33,22 @@
         return ret;
     }
 
-    //其次定义一个重要的函数
-    //函数负责对单个选择器的解析并按其提取节点
-    //@param {String} crumb  xuanze器文本，如:
-    //    "div#nerd.is ul.happy li p"
-    //@param {DOM Object} context 上下文限定，过滤器以此开始向下搜索
-    //@return {Array} 匹配到的DOM节点组成的数组
-    //function matchEl (filter, context) {
+
+    /**
+     * 在上下文中根据选择器文本匹配DOM
+     * @param  {} crumb 选择器文本 'div#js-id.js-class ul.js-ul li p'
+     * @param  {} context 上下文限定
+     * @return {Array} 匹配到的DOM节点组成的数组
+     */
     function matchEl(crumb, context) {
         var i, j, len, len2, rets = [],
             ret, tagName, id, clazz, child, pattern, type, attr, val, dice, queue;
-
-
-        //handle context to make sure that it is an array
+        //上下文为数组
         context = isArray(context) ? context : [context];
-
-        //tagname limited, prevent from large selections
+        console.log('要匹配的文本和上下文:', crumb, context);
+        //获取标签
         tagName = crumb.match(/^\w+/) !== null && crumb.match(/^\w+/)[0] || "*";
+        console.log("匹配到的标签:", tagName);
         for (i = 0, len = context.length; i < len; i++) {
             rets = rets.concat(
                 makeArray(
@@ -258,9 +257,7 @@
             }
         }
 
-        return isArray(rets) ?
-            rets[0] :
-            rets;
+        return rets; 
     }
 
 
