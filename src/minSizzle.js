@@ -44,8 +44,7 @@
      * @param  {} context 上下文限定
      * @return {Array} 匹配到的DOM节点组成的数组
      */
-    function matchEl(crumb, context) {
-        console.log(context);
+    function matchEl(crumb, context) { 
         var result = [],
             ret;
         //上下文为数组
